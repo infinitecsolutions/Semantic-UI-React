@@ -16,7 +16,7 @@ const webpackConfig = {
     noParse: [],
     rules: [],
   },
-  plugins: [],
+  plugins: ["transform-semantic-ui-react-imports"],
   resolve: {
     modules: [
       paths.base(),

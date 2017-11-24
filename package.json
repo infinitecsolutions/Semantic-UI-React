@@ -1,6 +1,6 @@
 {
-  "name": "semantic-ui-react",
-  "version": "0.76.0",
+  "name": "@infinitecsolutions/semantic-ui-react",
+  "version": "0.76.2",
   "description": "The official Semantic-UI-React integration.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "docs": "gulp docs",
-    "build": "yarn build:commonjs && yarn build:es && yarn build:umd && yarn build:docs",
+    "build": "yarn build:commonjs && yarn build:es && yarn build:umd",
     "prebuild:commonjs": "rimraf dist/commonjs",
     "build:commonjs": "cross-env NODE_ENV=build babel src -d dist/commonjs && yarn tsd",
     "prebuild:es": "rimraf dist/es",
@@ -48,7 +48,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://github.com/Semantic-Org/Semantic-UI-React.git"
+    "url": "git+ssh://git@github.com/Semantic-Org/Semantic-UI-React.git"
   },
   "author": "Levi Thomason <me@levithomason.com>",
   "license": "MIT",
@@ -100,7 +100,7 @@
     "express": "^4.15.4",
     "faker": "^4.1.0",
     "gh-pages": "^1.0.0",
-    "gulp": "gulpjs/gulp#4.0",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-html-replace": "^1.6.2",
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.1.0",
@@ -149,5 +149,14 @@
   "peerDependencies": {
     "react": ">=0.14.0 <= 16",
     "react-dom": ">=0.14.0 <= 16"
-  }
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "keywords": [
+    "react",
+    "semantic-ui"
+  ]
 }
