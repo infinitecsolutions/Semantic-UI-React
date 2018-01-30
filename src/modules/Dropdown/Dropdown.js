@@ -7,6 +7,7 @@ import {
   AutoControlledComponent as Component,
   childrenUtils,
   customPropTypes,
+  doesNodeContainClick,
   eventStack,
   getElementType,
   getUnhandledProps,
@@ -397,7 +398,10 @@ export default class Dropdown extends Component {
     this.setValue(value)
     this.setSelectedIndex(value)
 
-    if (open) this.open()
+    if (open) {
+      this.open()
+      this.attachHandlersOnOpen()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -479,14 +483,7 @@ export default class Dropdown extends Component {
     // opened / closed
     if (!prevState.open && this.state.open) {
       debug('dropdown opened')
-      eventStack.sub('keydown', [
-        this.closeOnEscape,
-        this.moveSelectionOnKeyDown,
-        this.selectItemOnEnter,
-        this.removeItemOnBackspace,
-      ])
-      eventStack.sub('click', this.closeOnDocumentClick)
-      eventStack.unsub('keydown', [this.openOnArrow, this.openOnSpace])
+      this.attachHandlersOnOpen()
       this.scrollSelectedItemIntoView()
     } else if (prevState.open && !this.state.open) {
       debug('dropdown closed')
@@ -647,9 +644,20 @@ export default class Dropdown extends Component {
     if (!this.props.closeOnBlur) return
 
     // If event happened in the dropdown, ignore it
-    if (this.ref && _.isFunction(this.ref.contains) && this.ref.contains(e.target)) return
+    if (this.ref && doesNodeContainClick(this.ref, e)) return
 
     this.close()
+  }
+
+  attachHandlersOnOpen = () => {
+    eventStack.sub('keydown', [
+      this.closeOnEscape,
+      this.moveSelectionOnKeyDown,
+      this.selectItemOnEnter,
+      this.removeItemOnBackspace,
+    ])
+    eventStack.sub('click', this.closeOnDocumentClick)
+    eventStack.unsub('keydown', [this.openOnArrow, this.openOnSpace])
   }
 
   // ----------------------------------------
