@@ -1,5 +1,5 @@
 {
-  "name": "semantic-ui-react",
+  "name": "@infinitecsolutions/semantic-ui-react",
   "version": "0.77.2",
   "description": "The official Semantic-UI-React integration.",
   "jsnext:main": "dist/es/index.js",
