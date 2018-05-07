@@ -16,7 +16,7 @@ const webpackConfig = {
     noParse: [],
     rules: [],
   },
-  plugins: ["transform-semantic-ui-react-imports"],
+  plugins: [],
   resolve: {
     modules: [paths.base(), 'node_modules'],
     alias: {
@@ -108,7 +108,10 @@ if (!__TEST__) {
 }
 
 if (__DEV__) {
-  webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin())
+  webpackConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  )
 }
 
 if (__PROD__) {
