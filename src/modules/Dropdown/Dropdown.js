@@ -151,6 +151,9 @@ export default class Dropdown extends Component {
     /** A selection dropdown can allow multiple selections. */
     multiple: PropTypes.bool,
 
+    /** A selection dropdown can show labels when allowing multiple selection. */
+    multipleLabel: PropTypes.bool,
+
     /** Message to display when there are no results. */
     noResultsMessage: PropTypes.string,
 
@@ -508,6 +511,7 @@ export default class Dropdown extends Component {
   // can't rely on props.value if we are controlled
   handleChange = (e, value) => {
     debug('handleChange()', value)
+    console.log('test2', true);
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
   }
 
