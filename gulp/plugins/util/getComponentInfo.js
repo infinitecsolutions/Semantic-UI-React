@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import path from 'path'
-import { defaultHandlers, parse } from 'react-docgen'
+import { defaultHandlers, parse, resolver } from 'react-docgen'
 import fs from 'fs'
 
+import config from '../../../config'
 import { parseDefaultValue, parseDocblock, parserCustomHandler, parseType } from './'
 
 const getComponentInfo = (filepath) => {
@@ -19,7 +20,22 @@ const getComponentInfo = (filepath) => {
   const componentType = path.basename(path.dirname(dir)).replace(/s$/, '')
 
   // start with react-docgen info
-  const info = parse(contents, null, [...defaultHandlers, parserCustomHandler])
+  const components = parse(contents, resolver.findAllComponentDefinitions, [
+    ...defaultHandlers,
+    parserCustomHandler,
+  ])
+  if (!components.length) {
+    throw new Error(`Could not find a component definition in "${filepath}".`)
+  }
+  if (components.length > 1) {
+    throw new Error(
+      [
+        `Found more than one component definition in "${filepath}".`,
+        'This is currently not supported, please ensure your module only defines a single React component.',
+      ].join(' '),
+    )
+  }
+  const info = components[0]
 
   // remove keys we don't use
   delete info.methods
@@ -40,11 +56,13 @@ const getComponentInfo = (filepath) => {
     ? null
     : info.displayName.replace(info.parentDisplayName, '')
 
+  // "ListItem.js" is a subcomponent is the "List" directory
+  const subcomponentRegExp = new RegExp(`^${dirname}\\w+\\.js$`)
+
   info.subcomponents = info.isParent
     ? fs
       .readdirSync(dir)
-      .filter(file => /^(?!index).*\.js$/.test(file))
-      .filter(file => dirname !== path.basename(file, path.extname(file)))
+      .filter(file => subcomponentRegExp.test(file))
       .map(file => path.basename(file, path.extname(file)))
     : null
 
@@ -64,6 +82,15 @@ const getComponentInfo = (filepath) => {
   // replace the component.description string with a parsed docblock object
   info.docblock = parseDocblock(info.description)
   delete info.description
+
+  // check that examples are present
+  info.examplesExist = false
+
+  if (info.isParent) {
+    info.examplesExist = fs.existsSync(
+      config.paths.docsSrc(`examples/${componentType}s/${dirname}/index.js`),
+    )
+  }
 
   // file and path info
   info.repoPath = absPath

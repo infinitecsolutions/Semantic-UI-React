@@ -1,4 +1,4 @@
-import path from 'path'
+const path = require('path')
 
 // ------------------------------------
 // Environment vars
@@ -19,6 +19,7 @@ const envConfig = {
   dir_dist: 'dist',
   dir_dll: 'dll',
   dir_docs_dist: 'docs/dist',
+  dir_docs_public: 'docs/public',
   dir_docs_src: 'docs/src',
 }
 
@@ -33,18 +34,13 @@ const paths = {
   dist: base.bind(null, envConfig.dir_dist),
   dll: base.bind(null, envConfig.dir_dll),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
+  docsPublic: base.bind(null, envConfig.dir_docs_public),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
 }
 
 const config = {
   ...envConfig,
   paths,
-
-  // ----------------------------------
-  // Server Configuration
-  // ----------------------------------
-  server_host: 'localhost',
-  server_port: process.env.PORT || 8080,
 
   // ----------------------------------
   // Compiler Configuration
@@ -84,10 +80,9 @@ const config = {
   compiler_vendor: [
     '@babel/standalone',
     'brace',
-    'brace/ext/language_tools',
     'brace/mode/jsx',
     'brace/mode/html',
-    'brace/theme/tomorrow',
+    'brace/theme/tomorrow_night',
     'classnames',
     'copy-to-clipboard',
     'faker',
@@ -97,4 +92,4 @@ const config = {
   ],
 }
 
-export default config
+module.exports = config

@@ -1,54 +1,64 @@
-import * as React from 'react';
+import * as React from 'react'
 
 // ======================================================
 // Alignments
 // ======================================================
 
-export type SemanticFLOATS = 'left' | 'right';
-export type SemanticTEXTALIGNMENTS = 'left' | 'center' | 'right' | 'justified';
-export type SemanticVERTICALALIGNMENTS = 'top' | 'middle' | 'bottom';
+export type SemanticFLOATS = 'left' | 'right'
+export type SemanticTEXTALIGNMENTS = 'left' | 'center' | 'right' | 'justified'
+export type SemanticVERTICALALIGNMENTS = 'top' | 'middle' | 'bottom'
 
 // ======================================================
 // Common element's props
 // ======================================================
 
-export interface HtmlLabelProps {
-  [key: string]: any;
-
-  children?: React.ReactNode;
+export interface HtmlLabelProps extends StrictHtmlLabelProps {
+  [key: string]: any
 }
 
-export interface HtmlIframeProps {
-  [key: string]: any;
-
-  src?: string;
+export interface StrictHtmlLabelProps {
+  children?: React.ReactNode
 }
 
-export interface HtmlImageProps {
-  [key: string]: any;
-
-  src?: string;
+export interface HtmlIframeProps extends StrictHtmlIframeProps {
+  [key: string]: any
 }
 
-export interface HtmlInputrops {
-  [key: string]: any;
-
-  type?: string;
+export interface StrictHtmlIframeProps {
+  src?: string
 }
 
-export interface HtmlSpanProps {
-  [key: string]: any;
+export interface HtmlImageProps extends StrictHtmlImageProps {
+  [key: string]: any
+}
 
-  children?: React.ReactNode;
+export interface StrictHtmlImageProps {
+  src?: string
+}
+
+export interface HtmlInputrops extends StrictHtmlInputrops {
+  [key: string]: any
+}
+
+export interface StrictHtmlInputrops {
+  type?: string
+}
+
+export interface HtmlSpanProps extends StrictHtmlSpanProps {
+  [key: string]: any
+}
+
+export interface StrictHtmlSpanProps {
+  children?: React.ReactNode
 }
 
 // ======================================================
 // Types
 // ======================================================
 
-export type SemanticShorthandCollection<T> = Array<SemanticShorthandItem<T>>;
-export type SemanticShorthandContent = React.ReactNode;
-export type SemanticShorthandItem<T> = React.ReactNode | T;
+export type SemanticShorthandCollection<T> = SemanticShorthandItem<T>[]
+export type SemanticShorthandContent = React.ReactNode
+export type SemanticShorthandItem<T> = React.ReactNode | T
 
 // ======================================================
 // Styling
@@ -67,7 +77,7 @@ export type SemanticCOLORS =
   | 'pink'
   | 'brown'
   | 'grey'
-  | 'black';
+  | 'black'
 export type SemanticSIZES =
   | 'mini'
   | 'tiny'
@@ -76,7 +86,7 @@ export type SemanticSIZES =
   | 'large'
   | 'big'
   | 'huge'
-  | 'massive';
+  | 'massive'
 
 // ======================================================
 // Transitions
@@ -106,7 +116,7 @@ type SemanticDIRECTIONALTRANSITIONS =
   | 'swing down'
   | 'swing left'
   | 'swing right'
-  | 'zoom';
+  | 'zoom'
 type SemanticSTATICTRANSITIONS =
   | 'jiggle'
   | 'flash'
@@ -114,15 +124,15 @@ type SemanticSTATICTRANSITIONS =
   | 'pulse'
   | 'tada'
   | 'bounce'
-  | 'glow';
+  | 'glow'
 
-export type SemanticTRANSITIONS = SemanticDIRECTIONALTRANSITIONS | SemanticSTATICTRANSITIONS;
+export type SemanticTRANSITIONS = SemanticDIRECTIONALTRANSITIONS | SemanticSTATICTRANSITIONS
 
 // ======================================================
 // Widths
 // ======================================================
 
-type SemanticWIDTHSNUMBER = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
+type SemanticWIDTHSNUMBER = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
 type SemanticWIDTHSSTRING =
   | '1'
   | '2'
@@ -155,9 +165,9 @@ type SemanticWIDTHSSTRING =
   | 'thirteen'
   | 'fourteen'
   | 'fifteen'
-  | 'sixteen';
+  | 'sixteen'
 
-export type SemanticWIDTHS = SemanticWIDTHSNUMBER | SemanticWIDTHSSTRING;
+export type SemanticWIDTHS = SemanticWIDTHSNUMBER | SemanticWIDTHSSTRING
 
 // ======================================================
 // Icon Names
@@ -266,8 +276,10 @@ export type SemanticICONS =
   | 'share'
   | 'share square'
   | 'share square outline'
-  | 'sign in alternate'
-  | 'sign out alternate'
+  | 'sign-in'
+  | 'sign-out'
+  | 'sign-in alternate'
+  | 'sign-out alternate'
   | 'sort'
   | 'sort alphabet down'
   | 'sort alphabet up'
@@ -284,6 +296,8 @@ export type SemanticICONS =
   | 'undo'
   | 'undo alternate'
   | 'upload'
+  | 'zoom-in'
+  | 'zoom-out'
   | 'audio description'
   | 'backward'
   | 'circle'
@@ -880,8 +894,8 @@ export type SemanticICONS =
   | 'share square'
   | 'share square outline'
   | 'shield alternate'
-  | 'sign in alternate'
-  | 'sign out alternate'
+  | 'sign-in'
+  | 'sign-out'
   | 'signal'
   | 'sitemap'
   | 'sliders horizontal'
@@ -1550,7 +1564,7 @@ export type SemanticICONS =
   | 'css3'
   | 'css3 alternate'
   | 'cuttlefish'
-  | 'd and'
+  | 'd and d'
   | 'dashcube'
   | 'delicious'
   | 'deploydog'
@@ -1659,7 +1673,7 @@ export type SemanticICONS =
   | 'less'
   | 'linechat'
   | 'linkedin'
-  | 'linkedin in'
+  | 'linkedin alternate'
   | 'linode'
   | 'linux'
   | 'lyft'
@@ -1792,6 +1806,7 @@ export type SemanticICONS =
   | 'vk'
   | 'vnv'
   | 'vuejs'
+  | 'wechat'
   | 'weibo'
   | 'weixin'
   | 'whatsapp'
@@ -1821,15 +1836,6 @@ export type SemanticICONS =
   | 'user doctor'
   | 'shield'
   | 'puzzle'
-  | 'credit card amazon pay'
-  | 'credit card american express'
-  | 'credit card diners club'
-  | 'credit card discover'
-  | 'credit card jcb'
-  | 'credit card mastercard'
-  | 'credit card paypal'
-  | 'credit card stripe'
-  | 'credit card visa'
   | 'add circle'
   | 'add square'
   | 'add to calendar'
@@ -1840,9 +1846,6 @@ export type SemanticICONS =
   | 'alarm'
   | 'ald'
   | 'als'
-  | 'american express card'
-  | 'american express'
-  | 'amex'
   | 'announcement'
   | 'area chart'
   | 'area graph'
@@ -1859,7 +1862,6 @@ export type SemanticICONS =
   | 'battery four'
   | 'battery high'
   | 'battery low'
-  | 'battery medium'
   | 'battery one'
   | 'battery three'
   | 'battery two'
@@ -1890,38 +1892,30 @@ export type SemanticICONS =
   | 'delete calendar'
   | 'delete'
   | 'detective'
-  | 'diners club card'
-  | 'diners club'
-  | 'discover card'
-  | 'discover'
   | 'discussions'
   | 'doctor'
   | 'dollar'
   | 'dont'
-  | 'dribble'
   | 'drivers license'
   | 'dropdown'
-  | 'eercast'
   | 'emergency'
   | 'envira gallery'
   | 'erase'
   | 'eur'
   | 'euro'
   | 'eyedropper'
-  | 'fa'
   | 'factory'
   | 'favorite'
   | 'feed'
   | 'female homosexual'
   | 'file text'
+  | 'file text outline'
   | 'find'
   | 'first aid'
-  | 'five hundred pixels'
   | 'fork'
   | 'game'
   | 'gay'
   | 'gbp'
-  | 'gittip'
   | 'google plus circle'
   | 'google plus official'
   | 'grab'
@@ -1949,9 +1943,6 @@ export type SemanticICONS =
   | 'inr'
   | 'intergender'
   | 'intersex'
-  | 'japan credit bureau card'
-  | 'japan credit bureau'
-  | 'jcb'
   | 'jpy'
   | 'krw'
   | 'lab'
@@ -1975,8 +1966,6 @@ export type SemanticICONS =
   | 'mars alternate'
   | 'mars horizontal'
   | 'mars vertical'
-  | 'mastercard card'
-  | 'mastercard'
   | 'microsoft edge'
   | 'military'
   | 'ms edge'
@@ -1984,7 +1973,6 @@ export type SemanticICONS =
   | 'new pied piper'
   | 'non binary transgender'
   | 'numbered list'
-  | 'optinmonster'
   | 'options'
   | 'other gender horizontal'
   | 'other gender vertical'
@@ -1999,7 +1987,6 @@ export type SemanticICONS =
   | 'pied piper hat'
   | 'pin'
   | 'plus cart'
-  | 'pocket'
   | 'point'
   | 'pointing down'
   | 'pointing left'
@@ -2057,7 +2044,6 @@ export type SemanticICONS =
   | 'television'
   | 'text cursor'
   | 'text telephone'
-  | 'theme isle'
   | 'theme'
   | 'thermometer'
   | 'thumb tack'
@@ -2086,16 +2072,12 @@ export type SemanticICONS =
   | 'vcard'
   | 'video camera'
   | 'video play'
-  | 'visa card'
-  | 'visa'
   | 'volume control phone'
   | 'wait'
   | 'warning circle'
   | 'warning sign'
   | 'warning'
-  | 'wechat'
   | 'wi-fi'
-  | 'wikipedia'
   | 'winner'
   | 'wizard'
   | 'woman'
@@ -2105,8 +2087,6 @@ export type SemanticICONS =
   | 'world'
   | 'write square'
   | 'x'
-  | 'yc'
-  | 'ycombinator'
   | 'yen'
   | 'zip'
   | 'zoom in'
@@ -2151,4 +2131,4 @@ export type SemanticICONS =
   | 'ticket'
   | 'times rectangle'
   | 'write'
-  | 'youtube play';
+  | 'youtube play'

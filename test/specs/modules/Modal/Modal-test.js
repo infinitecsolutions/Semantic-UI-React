@@ -30,7 +30,12 @@ const wrapperShallow = (...args) => (wrapper = shallow(...args))
 
 describe('Modal', () => {
   beforeEach(() => {
-    if (wrapper && wrapper.unmount) wrapper.unmount()
+    if (wrapper && wrapper.unmount) {
+      try {
+        wrapper.unmount()
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
+    }
     wrapper = undefined
 
     const dimmer = document.querySelector('.ui.dimmer')
@@ -45,11 +50,13 @@ describe('Modal', () => {
   common.hasValidTypings(Modal)
 
   common.implementsShorthandProp(Modal, {
+    autoGenerateKey: false,
     propKey: 'header',
     ShorthandComponent: ModalHeader,
     mapValueToProps: content => ({ content }),
   })
   common.implementsShorthandProp(Modal, {
+    autoGenerateKey: false,
     propKey: 'content',
     ShorthandComponent: ModalContent,
     mapValueToProps: content => ({ content }),
@@ -246,18 +253,6 @@ describe('Modal', () => {
       it('adds a dimmer to the body', () => {
         wrapperMount(<Modal open dimmer />)
         assertBodyContains('.ui.page.modals.dimmer.transition.visible.active')
-      })
-    })
-
-    describe('false', () => {
-      it('does not render a dimmer', () => {
-        wrapperMount(<Modal open dimmer={false} />)
-        assertBodyClasses('dimmable dimmed blurring', false)
-      })
-
-      it('does not add any dimmer classes to the body', () => {
-        wrapperMount(<Modal open dimmer={false} />)
-        assertBodyClasses('dimmable dimmed blurring', false)
       })
     })
 
@@ -496,6 +491,19 @@ describe('Modal', () => {
     it('does not add the scrolling class to the body by default', () => {
       wrapperMount(<Modal open />)
       assertBodyClasses('scrolling', false)
+    })
+
+    it('does not add the scrolling class to the body when equal to the window height', (done) => {
+      wrapperMount(
+        <Modal open style={{ height: window.innerHeight }}>
+          foo
+        </Modal>,
+      )
+
+      requestAnimationFrame(() => {
+        assertBodyClasses('scrolling', false)
+        done()
+      })
     })
 
     it('adds the scrolling class to the body when taller than the window', (done) => {

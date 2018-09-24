@@ -117,6 +117,8 @@ class Input extends Component {
 
   focus = () => this.inputRef.focus()
 
+  select = () => this.inputRef.select()
+
   handleChange = (e) => {
     const value = _.get(e, 'target.value')
 
@@ -230,8 +232,8 @@ class Input extends Component {
         {actionPosition === 'left' && actionElement}
         {labelPosition !== 'right' && labelElement}
         {createHTMLInput(input || type, { defaultProps: htmlInputProps, autoGenerateKey: false })}
-        {actionPosition !== 'left' && actionElement}
         {Icon.create(this.computeIcon(), { autoGenerateKey: false })}
+        {actionPosition !== 'left' && actionElement}
         {labelPosition === 'right' && labelElement}
       </ElementType>
     )

@@ -1,20 +1,21 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface RefProps {
-  [key: string]: any;
+export interface RefProps extends StrictRefProps {
+  [key: string]: any
+}
 
+export interface StrictRefProps {
   /** Primary content. */
-  children?: React.ReactNode;
+  children?: React.ReactNode
 
   /**
    * Called when componentDidMount.
    *
    * @param {HTMLElement} node - Referred node.
    */
-  innerRef?: (node: HTMLElement) => void;
+  innerRef?: (node: HTMLElement) => void
 }
 
-declare class Ref extends React.Component<RefProps, {}> {
-}
+declare class Ref extends React.Component<RefProps, {}> {}
 
-export default Ref;
+export default Ref

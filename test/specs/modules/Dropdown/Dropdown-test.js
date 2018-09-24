@@ -96,8 +96,10 @@ describe('Dropdown', () => {
 
   common.implementsIconProp(Dropdown, {
     assertExactMatch: false,
+    autoGenerateKey: false,
   })
   common.implementsShorthandProp(Dropdown, {
+    autoGenerateKey: false,
     propKey: 'header',
     ShorthandComponent: DropdownHeader,
     mapValueToProps: val => ({ content: val }),
@@ -468,6 +470,7 @@ describe('Dropdown', () => {
         .first()
         .simulate('click')
         .should.have.prop('active', true)
+
       wrapper.should.have.state('value', options[0].value)
 
       dropdownMenuIsClosed()
@@ -914,11 +917,7 @@ describe('Dropdown', () => {
       wrapper
         .find('DropdownItem')
         .at(1)
-        .should.have.prop('selected', false)
-      wrapper
-        .find('DropdownItem')
-        .at(1)
-        .should.have.prop('active', false)
+        .should.have.props({ selected: false, active: false })
 
       // select and make active
       domEvent.keyDown(document, { key: 'ArrowDown' })
@@ -928,7 +927,7 @@ describe('Dropdown', () => {
       wrapper
         .find('DropdownItem')
         .at(1)
-        .should.have.prop('active', true)
+        .should.have.props({ selected: true, active: true })
     })
     it('closes the menu', () => {
       wrapperMount(<Dropdown options={options} selection />).simulate('click')
@@ -1260,9 +1259,9 @@ describe('Dropdown', () => {
     it('is called once when the icon is clicked with a search prop', () => {
       // https://github.com/Semantic-Org/Semantic-UI-React/issues/2600
       const onOpen = sandbox.spy()
-      wrapperMount(<Dropdown options={options} selection search onOpen={onOpen} />)
-        .find('i.icon')
-        .simulate('click')
+      wrapperShallow(<Dropdown options={options} selection search onOpen={onOpen} />)
+        .find('Icon')
+        .simulate('click', { stopPropagation: _.noop })
 
       onOpen.should.have.been.calledOnce()
     })
@@ -1271,9 +1270,20 @@ describe('Dropdown', () => {
   describe('onClose', () => {
     it('called when dropdown would close', () => {
       const onClose = sandbox.spy()
-      wrapperMount(<Dropdown options={options} selection defaultOpen onClose={onClose} />)
+      wrapperMount(<Dropdown defaultOpen onClose={onClose} options={options} selection />)
 
       wrapper.simulate('click')
+      onClose.should.have.been.calledOnce()
+    })
+
+    it('called once even when blurred', () => {
+      // Heads up!
+      // Special test for: https://github.com/Semantic-Org/Semantic-UI-React/issues/2953
+      const onClose = sandbox.spy()
+      wrapperMount(<Dropdown defaultOpen onClose={onClose} options={options} selection />)
+
+      wrapper.simulate('click')
+      wrapper.simulate('blur')
       onClose.should.have.been.calledOnce()
     })
   })
@@ -1946,9 +1956,7 @@ describe('Dropdown', () => {
       // search for value yields 2 results as per our custom search function
       search.simulate('change', { target: { value: searchQuery } })
 
-      searchFunction.should.have.been.calledOnce()
       searchFunction.should.have.been.calledWithMatch(options, searchQuery)
-
       wrapper
         .find('DropdownItem')
         .should.have.lengthOf(2, 'Searching with custom search function did not yield 2 results.')
@@ -2020,6 +2028,33 @@ describe('Dropdown', () => {
       domEvent.keyDown(document, { key: 'Enter' })
 
       dropdownMenuIsOpen()
+    })
+  })
+
+  describe('searchInput', () => {
+    it('overrides onChange handler', () => {
+      const onInputChange = sandbox.spy()
+      const onSearchChange = sandbox.spy()
+
+      wrapperShallow(
+        <Dropdown
+          onSearchChange={onSearchChange}
+          options={options}
+          search
+          searchInput={{ onChange: onInputChange }}
+        />,
+      )
+
+      wrapper
+        .find(DropdownSearchInput)
+        .shallow()
+        .simulate('change', {
+          stopPropagation: _.noop,
+          target: { value: faker.hacker.noun() },
+        })
+
+      onInputChange.should.have.been.calledOnce()
+      onSearchChange.should.have.been.calledOnce()
     })
   })
 
@@ -2137,6 +2172,20 @@ describe('Dropdown', () => {
       instance.render()
 
       instance.renderText.should.have.been.called()
+    })
+  })
+
+  describe('lazyLoad', () => {
+    it('does not render options when closed', () => {
+      wrapperShallow(<Dropdown options={options} lazyLoad />).should.not.have.descendants(
+        'DropdownItem',
+      )
+    })
+
+    it('renders options when open', () => {
+      wrapperShallow(<Dropdown options={options} lazyLoad open />).should.have.descendants(
+        'DropdownItem',
+      )
     })
   })
 
