@@ -1,6 +1,6 @@
 {
   "name": "@infinitecsolutions/semantic-ui-react",
-  "version": "0.82.5",
+  "version": "0.82.6",
   "description": "The official Semantic-UI-React integration.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
