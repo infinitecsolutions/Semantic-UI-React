@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SemanticShorthandContent } from '../..'
+import { SemanticShorthandContent } from '../../generic'
 
 import SidebarPushable from './SidebarPushable'
 import SidebarPusher from './SidebarPusher'
@@ -61,6 +61,9 @@ export interface StrictSidebarProps {
    * @param {object} data - All props.
    */
   onVisible?: (event: React.MouseEvent<HTMLElement>, data: SidebarProps) => void
+
+  /** A sidebar can handle clicks on the passed element. */
+  target?: object
 
   /** Controls whether or not the sidebar is visible on the page. */
   visible?: boolean

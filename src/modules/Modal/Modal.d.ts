@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { SemanticShorthandItem } from '../..'
+import { SemanticShorthandItem } from '../../generic'
 import { StrictPortalProps } from '../../addons/Portal'
 import { default as ModalActions, ModalActionsProps } from './ModalActions'
 import { default as ModalContent, ModalContentProps } from './ModalContent'
@@ -101,7 +101,7 @@ export interface StrictModalProps extends StrictPortalProps {
   open?: boolean
 
   /** A modal can vary in size. */
-  size?: 'fullscreen' | 'large' | 'mini' | 'small' | 'tiny'
+  size?: 'mini' | 'tiny' | 'small' | 'large' | 'fullscreen'
 
   /** Custom styles. */
   style?: React.CSSProperties

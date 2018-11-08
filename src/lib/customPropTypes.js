@@ -247,8 +247,7 @@ export const givenProps = (propsShape, validator) => (props, propName, component
 
   if (error) {
     // poor mans shallow pretty print, prevents JSON circular reference errors
-    const prettyProps = `{ ${_
-      .keys(_.pick(_.keys(propsShape), props))
+    const prettyProps = `{ ${_.keys(_.pick(_.keys(propsShape), props))
       .map((key) => {
         const val = props[key]
         let renderedValue = val
@@ -342,6 +341,7 @@ export const itemShorthand = (...args) =>
   every([
     disallow(['children']),
     PropTypes.oneOfType([
+      PropTypes.func,
       PropTypes.node,
       PropTypes.object,
       PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
